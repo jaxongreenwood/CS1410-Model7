@@ -14,6 +14,7 @@ private:
 
 public:
     Counter():count(0){};       // constructor
+    Counter(int c):count(c){};  // constructor with one argument
 
     unsigned int get_count(){   // returns count
         return count;
@@ -23,9 +24,9 @@ public:
     // the operator keyword is used to overload the operator in hand
     Counter operator ++(){         // increment prefix
         ++count;
-        Counter temp;
-        temp.count = count;
-        return temp;
+        //Counter temp;
+        /*temp.count = count;*/
+        return /*temp*/ Counter(count);
     }
 };
 
