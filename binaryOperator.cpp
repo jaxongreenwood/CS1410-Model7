@@ -34,10 +34,11 @@ public:
     }
 
     Distance operator + (Distance) const;
+    void operator += (Distance);
 };
 
 // Return the sum
-Distance Distance::operator+(Distance d2) const {
+Distance Distance::operator + (Distance d2) const {
     int f = feet + d2.feet;
     int i = inches + d2.inches;
 
@@ -47,6 +48,19 @@ Distance Distance::operator+(Distance d2) const {
     }
     return Distance(f, i);
 }
+
+void Distance::operator += (Distance d2) {      // adding 1 to existing one
+
+    feet += d2.feet;
+    inches = inches + d2.inches;
+
+    if (inches >= 12.0){
+        inches -= 12.0;
+        feet++;
+    }
+
+}
+
 // Prototypes
 
 // Main Program Program
@@ -71,6 +85,12 @@ int main(void) {
     cout << "Distance d3 =";
     d3.showDist();
     cout << endl;
+
+    d2 += d3;
+    cout << "Distance d2 =";
+    d2.showDist();
+    cout << endl;
+
 
     return 0;
 }
