@@ -1,5 +1,5 @@
 
-// File: binaryOperator
+// File: casting
 // Created by Jaxon Greenwood on 10/10/2017 for CS1410.
 // Copyright (c) 2017 WSU
 //
@@ -9,17 +9,23 @@ using namespace std;
 // Constants
 class Distance{
 private:
+    float MTF;        //Meters to feet
     int feet;
     float inches;
 public:
-    Distance():feet(0), inches(0.0){}
+    Distance():feet(0), inches(0.0), MTF(3.280833F){}
 
-    Distance(int f, float i){
+    Distance(int meters): MTF(3.280833F){
+        float fltFeet = MTF * meters;
+
+        feet = int(fltFeet);
+        inches = 12 * (fltFeet - feet);
+    }
+
+    Distance(int f, float i): MTF(3.280833F){
         feet = f;
         inches = i;
     }
-
-
 
     void getDist(){
         cout << "Enter feet: ";
@@ -35,6 +41,11 @@ public:
 
     Distance operator + (Distance) const;
     void operator += (Distance);
+    operator float() const{
+        float ffeet = inches/12;
+        ffeet += static_cast<float>(feet);
+        return ffeet/MTF;
+    }                      // converts to inches
 };
 
 // Return the sum
@@ -67,9 +78,10 @@ void Distance::operator += (Distance d2) {      // adding 1 distance to existing
 
 int main(void) {
 
-    Distance d1, d3;
+    Distance d1;
     Distance d2(11, 6.25);
-
+    Distance d3(5);
+    float mtrs;
     d1.getDist();
 
     cout << "\nDistance d1 = ";
@@ -85,6 +97,9 @@ int main(void) {
     cout << "Distance d3 =";
     d3.showDist();
     cout << endl;
+
+    mtrs = static_cast<float>(d2);
+    cout << "Dist d2 = " << mtrs << " meters" << endl;
 
     d2 += d3;
     cout << "Distance d2 =";
